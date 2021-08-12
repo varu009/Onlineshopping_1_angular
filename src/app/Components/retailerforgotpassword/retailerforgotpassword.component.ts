@@ -43,7 +43,16 @@ export class RetailerforgotpasswordComponent implements OnInit {
             alert("Password changed successfully");
             this.router.navigate(['retailerlogin'])
           }
-         }
+         },
+         (err)=>
+    {console.log(err.error)
+      if(err.error.text==='Valid')
+      {
+        alert("Password changed successfully");
+            this.router.navigate(['retailerlogin'])
+      }
+     
+     }
       )
       this.forgetPasswordOTPForm.reset();
     }

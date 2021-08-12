@@ -16,6 +16,12 @@ export class AdminDashboardComponent implements OnInit {
   constructor(private adminserv : AdminserviceService) { }
 
   ngOnInit(): void {
+    this.getRetailersList();
+    
+  }
+
+  getRetailersList()
+  {
     this.retailerList = this.adminserv.getRetailers().subscribe(
       data=>{this.retailerList = data;}
     );
@@ -26,10 +32,21 @@ export class AdminDashboardComponent implements OnInit {
         this.result = data;
         if(this.result == "Approved"){
           //function
-          alert("Retailer is approved.");
+          this.getRetailersList();
+          alert("Approved Successfully");
           this.sendemail(retaileremail);
         }
+      },
+      (err)=>
+    {console.log(err.error)
+      if(err.error.text==='Approved')
+      {
+        this.getRetailersList();
+          alert("Approved Successfully");
       }
+     
+     }
+
     )  
   }
   sendemail(retaileremail : string){

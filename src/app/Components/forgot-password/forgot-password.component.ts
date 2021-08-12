@@ -45,7 +45,16 @@ export class ForgotPasswordComponent implements OnInit {
             alert("Password changed successfully");
             this.router.navigate(['userlogin'])
           }
-         }
+         },
+         (err)=>
+    {console.log(err.error)
+      if(err.error.text==='Valid')
+      {
+            alert("Password changed successfully");
+            this.router.navigate(['userlogin'])
+      }
+     
+     }
       )
       this.forgetPasswordOTPForm.reset();
     }
@@ -69,8 +78,22 @@ export class ForgotPasswordComponent implements OnInit {
           this.buttonname = 'Put OTP';
           this.checkotp = data;
         }
+      },
+      (err)=>
+    {console.log(err.error)
+      if(err.error.text===0)
+      {
+        alert('Please enter correct email id');
+        this.buttonname = 'Get OTP';
+        this.otpstatus = !this.otpstatus
+        this.forgetPasswordOTPForm.reset();
+      }else{
+        alert("Please check your email for OTP");
+        this.buttonname = 'Put OTP';
+        this.checkotp = err;
       }
+     
+     }
     );
+    }
   }
-
-}
